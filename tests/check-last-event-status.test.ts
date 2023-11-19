@@ -1,5 +1,8 @@
-/* Mock - É um duple de teste que está preocupado com input, as
-variáveis auxiliares para fazer comparações */
+/*
+  Mock - É um duple de teste que está preocupado com input e com as
+  criações de variáveis auxiliares que ajudam a comprovar se realmente
+  o método foi chamado com o parâmetro correto.
+*/
 
 class CheckLastEventStatus {
   constructor (
@@ -17,9 +20,11 @@ interface LoadLastEventRepository {
 
 class LoadLastEventRepositoryMock implements LoadLastEventRepository {
   groupId?: string
+  callsCount = 0
 
   async loadLastEvent (groupId: string): Promise<void> {
     this.groupId = groupId
+    this.callsCount++
   }
 }
 
@@ -31,5 +36,6 @@ describe('CheckLastEventStatus', () => {
     await checkLastEventStatus.perform('any_group_id')
 
     expect(loadLastEventRepository.groupId).toBe('any_group_id')
+    expect(loadLastEventRepository.callsCount).toBe(1)
   })
 })
