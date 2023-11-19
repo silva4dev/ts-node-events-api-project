@@ -17,4 +17,5 @@
 * Repository Pattern
 * Test Doubles (Mock)
 * Small Commits
+* System Under Test (SUT)
 
