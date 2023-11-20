@@ -8,6 +8,7 @@
 * Test Code in Production
 * Duplicate Code
 * Shotgun Surgery
+* Long Parameter List
 
 # Design Patterns/Principles/Conventions
 * You Ain't Gonna Need It (YAGNI)
@@ -21,3 +22,4 @@
 * Small Commits
 * System Under Test (SUT)
 * Strategy Pattern
+* Factory Pattern
