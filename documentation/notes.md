@@ -21,4 +21,3 @@
 * Small Commits
 * System Under Test (SUT)
 * Strategy Pattern
-
