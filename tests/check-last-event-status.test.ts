@@ -25,20 +25,22 @@ class CheckLastEventStatus {
 
   async perform ({ groupId }: { groupId: string }): Promise<string> {
     const event = await this.loadLastEventRepository.loadLastEvent({ groupId })
-    return event === undefined ? 'done' : 'active'
+    if (event === undefined) return 'done'
+    const now = new Date()
+    return event.endDate > now ? 'active' : 'inReview'
   }
 }
 
 interface LoadLastEventRepository {
-  loadLastEvent: (input: { groupId: string }) => Promise<object | undefined>
+  loadLastEvent: (input: { groupId: string }) => Promise<{ endDate: Date } | undefined>
 }
 
 class LoadLastEventRepositorySpy implements LoadLastEventRepository {
   groupId?: string
   callsCount = 0
-  output?: object
+  output?: { endDate: Date }
 
-  async loadLastEvent ({ groupId }: { groupId: string }): Promise<object | undefined> {
+  async loadLastEvent ({ groupId }: { groupId: string }): Promise<{ endDate: Date } | undefined> {
     this.groupId = groupId
     this.callsCount++
     return this.output
@@ -97,5 +99,16 @@ describe('CheckLastEventStatus', () => {
     const status = await sut.perform({ groupId })
 
     expect(status).toBe('active')
+  })
+
+  it('should return status active when now is after event end time', async () => {
+    const { sut, loadLastEventRepository } = makeSut()
+    loadLastEventRepository.output = {
+      endDate: new Date(new Date().getTime() - 1)
+    }
+
+    const status = await sut.perform({ groupId })
+
+    expect(status).toBe('inReview')
   })
 })
