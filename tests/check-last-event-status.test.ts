@@ -42,20 +42,6 @@ class LoadLastEventRepositorySpy implements LoadLastEventRepository {
   callsCount = 0
   output?: { endDate: Date, reviewDurationInHours: number }
 
-  setEndDateAfterNow (): void {
-    this.output = {
-      endDate: new Date(new Date().getTime() + 1),
-      reviewDurationInHours: 1
-    }
-  }
-
-  setEndDateEqualToNow (): void {
-    this.output = {
-      endDate: new Date(),
-      reviewDurationInHours: 1
-    }
-  }
-
   async loadLastEvent ({ groupId }: { groupId: string }): Promise<{ endDate: Date, reviewDurationInHours: number } | undefined> {
     this.groupId = groupId
     this.callsCount++
