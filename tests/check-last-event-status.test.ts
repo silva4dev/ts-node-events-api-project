@@ -103,10 +103,6 @@ describe('CheckLastEventStatus', () => {
 
   it('should return status inReview when now is after event end time', async () => {
     const { sut, loadLastEventRepository } = makeSut()
-
-    console.log('olha ai', new Date(new Date().getTime() - 1))
-    console.log('olha ai antigo', new Date())
-
     loadLastEventRepository.output = {
       endDate: new Date(new Date().getTime() - 1)
     }
